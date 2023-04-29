@@ -16,17 +16,8 @@ const Item = ({ item, width }) => {
         palette: {neutral},
     } = useTheme();
 
-    const { category, price, name, image} = item.attributes;
-    const {
-        data: {
-            attributes: {
-                formats: {
-                    medium: { url },
-                }
-            }
-        }
-    } = image;
-
+    const { category, price, name, imagePath} = item;
+  
     return (
         <Box width={width}>
             <Box 
@@ -38,8 +29,8 @@ const Item = ({ item, width }) => {
                     alt={item.name}
                     width="300px"
                     height="400px"
-                    src={`http://localhost:1337${url}`}
-                    onClick={() => navigate(`/item/${item.id}`)}
+                    src={`http://localhost:3001/assets/${imagePath}`}
+                    onClick={() => navigate(`/items/${item._id}`)}
                     style={{cursor: "pointer"}}
                 />
                 <Box

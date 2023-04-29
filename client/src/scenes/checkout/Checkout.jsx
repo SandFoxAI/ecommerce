@@ -18,8 +18,6 @@ const Checkout = () => {
   const isFirstStep = activeStep === 0;
   const isSecondStep = activeStep === 1;
 
-  console.log(isSecondStep)
-  console.log(activeStep)
   const handleFormSubmit = async (values, actions) => {
     setActiveStep(activeStep + 1);
 
@@ -31,7 +29,6 @@ const Checkout = () => {
       });
     }
 
-    console.log(isSecondStep)
     if (isSecondStep) {
       makePayment(values);
     }
@@ -44,20 +41,23 @@ const Checkout = () => {
     const requestBody = {
       userName: [values.firstName, values.lastName].join(" "),
       email: values.email,
-      products: cart.map(({ id, count }) => ({
-        id,
+      products: cart.map(({ _id, count }) => ({
+        _id,
         count,
       })),
     };
 
-    const response = await fetch("http://localhost:1337/api/orders", {
+  
+    console.log(requestBody)
+
+    const response = await fetch("http://localhost:3001/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
-    const session = await response.json();
+    const sessionId = await response.json();
     await stripe.redirectToCheckout({
-      sessionId: session.id,
+      sessionId: sessionId,
     });
   }
 

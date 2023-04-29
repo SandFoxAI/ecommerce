@@ -17,11 +17,11 @@ export const cartSlice = createSlice({
             state.cart = [...state.cart,action.payload.item]
         },
         removeFromCart: (state, action) => {
-            state.cart = state.cart.filter((item) => item.id !== action.payload.id)
+            state.cart = state.cart.filter((item) => item._id !== action.payload.id)
         },
         increaseCount: (state, action) => {
             state.cart = state.cart.map((item) => {
-                if (item.id === action.payload.id) {
+                if (item._id === action.payload.id) {
                     item.count++;
                 }
                 return item;
@@ -29,7 +29,7 @@ export const cartSlice = createSlice({
         },
         decreaseCount: (state, action) => {
             state.cart = state.cart.map((item) => {
-                if (item.id === action.payload.id && item.count > 1 ) {
+                if (item._id === action.payload.id && item.count > 1 ) {
                     item.count--;
                 }
                 return item;
