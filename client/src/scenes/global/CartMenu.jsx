@@ -26,7 +26,7 @@ const CartMenu = () => {
     const isCartOpen = useSelector((state) => state.cart.isCartOpen);
 
     const totalPrice = cart.reduce((total,item) => {
-        return total + item.count * item.attributes.price
+        return total + item.count * item.price
     },0);
 
     return (
@@ -62,28 +62,28 @@ const CartMenu = () => {
                     {/* CART LIST */}
                     <Box>
                         {cart.map((item) => (
-                            <Box key={ `${item.attributes.name}=${item.id}`}>
+                            <Box key={ `${item.name}=${item._id}`}>
                                 <FlexBox p="15px 0">
                                     <Box flex="1 1 40%">
                                         <img 
                                             alt={item?.name}
                                             width="123px"
                                             height="64px"
-                                            src={`http://localhost:1337${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
+                                            src={`http://localhost:3001/assets/${item?.imagePath}`}
                                         />
                                     </Box>
                                     <Box flex="1 1 60%">
                                         {/* item name */}
                                         <FlexBox mb="5px">
                                             <Typography fontWeight="bold">
-                                                {item.attributes.name}
+                                                {item.name}
                                             </Typography>
-                                            <IconButton onClick={()=> dispatch(removeFromCart({id: item.id}))}>
+                                            <IconButton onClick={()=> dispatch(removeFromCart({id: item._id}))}>
                                                 <CloseIcon />
                                             </IconButton>
                                         </FlexBox>
                                         <Typography>
-                                            {item.attributes.shortDescription}
+                                            {item.shortDescription}
                                         </Typography>
                                         {/*AMOUNT */}
                                         <FlexBox m="15px 0">
@@ -93,7 +93,7 @@ const CartMenu = () => {
                                                 border={`1.5px solid ${shades.neutral[500]}`}
                                             >
                                                 <IconButton
-                                                    onClick={() => dispatch(decreaseCount({id: item.id}))}
+                                                    onClick={() => dispatch(decreaseCount({id: item._id}))}
                                                 >
                                                     <RemoveIcon />
                                                 </IconButton>
@@ -101,14 +101,14 @@ const CartMenu = () => {
                                                     {item.count}
                                                 </Typography>
                                                 <IconButton
-                                                    onClick={() => dispatch(increaseCount({id: item.id}))}
+                                                    onClick={() => dispatch(increaseCount({id: item._id}))}
                                                 >
                                                     <AddIcon />
                                                 </IconButton>
                                             </Box>
                                             {/* PRICE */}
                                             <Typography fontWeight="bold">
-                                                ${item.attributes.price}
+                                                ${item.price}
                                             </Typography>
                                         </FlexBox>
                                     </Box>
